@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "reader": "^0.0.8",
-    "xlsx": "^0.18.5"
+    "xlsx": ">=0.19.3"
   }
 }
