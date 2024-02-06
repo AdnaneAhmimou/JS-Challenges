@@ -1,27 +1,20 @@
-//disable echoing the input
-const { stdin, stdout } = process;
-stdin.setRawMode(true);
-stdin.resume();
-stdin.setEncoding('utf8');
-
-
 const readline = require("readline");
 
+const { stdin, stdout } = process;
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
 let contacts = [];
 
 function addContact() {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-
   rl.question("Enter the name: ", (name) => {
     rl.question("Enter the phone number: ", (phoneNumber) => {
       contacts.push({ name, phoneNumber });
       console.log(`Contact added: ${name}, ${phoneNumber}`);
-      rl.close();
-      mainMenu(); 
+      mainMenu();
     });
   });
 }
@@ -31,45 +24,35 @@ function viewAllContacts() {
   contacts.forEach((contact) => {
     console.log(`Name: ${contact.name}, Phone Number: ${contact.phoneNumber}`);
   });
-  mainMenu(); 
+  mainMenu();
 }
 
 function searchContact() {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
+  rl.question("Search for a contact : ", (name) => {
+    let contactFound = false;
 
-  rl.question("Enter the name of the contact you want to search for: ", (name) => {
-      let contactFound = false;
-
-      for (const contact of contacts) {
-        if (contact.name === name) {
-          console.log(
-            `Found contact: Name : ${contact.name}, Phone Number : ${contact.phoneNumber}`
-          );
-          contactFound = true;
-          break;
-        }
+    for (const contact of contacts) {
+      if (contact.name === name) {
+        console.log(
+          `Contact: Name : ${contact.name}, Phone Number : ${contact.phoneNumber}`
+        );
+        contactFound = true;
+        break;
       }
-
-      if (!contactFound) {
-        console.log("Contact not found.");
-      }
-
-      rl.close();
-      mainMenu(); 
     }
-  );
+
+    if (!contactFound) {
+      console.log("Contact not found.");
+    }
+    mainMenu();
+  });
 }
 
 function mainMenu() {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-
-  rl.question("Choose an option:\n1. Add a contact\n2. View all contacts\n3. Search for a contact\n4. Exit\n", (option) => {
+  console.log('-------------------------------------------------------------------------');
+  rl.question(
+    "Choose an option:\n1. Add a contact\n2. View all contacts\n3. Search for a contact\n4. Exit\n",
+    (option) => {
       switch (option) {
         case "1":
           addContact();
@@ -86,7 +69,8 @@ function mainMenu() {
           break;
         default:
           console.log("Invalid option. Please try again.");
-          rl.close();
+          console.log('-------------------------------------------------------------------------');
+          mainMenu();
           break;
       }
     }
