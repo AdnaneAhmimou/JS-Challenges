@@ -12,9 +12,9 @@ async function fetchTemp(city) {
   return data.current_weather.temperature;
 }
 
-async function selectCityFromFile(citiesFilePath) {
+async function selectCityFromFile(path) {
   try {
-    const data = await fs.readFile(citiesFilePath, 'utf-8');
+    const data = await fs.readFile(path, 'utf-8');
     const cities = JSON.parse(data);
     const randomCity = selectRandomCity(cities);
     return randomCity;
