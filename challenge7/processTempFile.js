@@ -44,7 +44,7 @@ async function main() {
     const city = await selectCityFromFile(cities);
     await fetchTempToFile(city);
   } catch (error) {
-    console.error('An error occurred:', error);
+    console.error('error:', error);
   }
 }
 
