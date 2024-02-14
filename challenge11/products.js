@@ -70,17 +70,16 @@ app.put('/products/:id', (req, res) => {
 });
 
 app.delete('/products/:id', (req, res) => {
-  productId = parseInt(req.params.id);
-  const product = products.find(product => product.id === productId);
-  if (!product) {
+  const productId = parseInt(req.params.id);
+  const productIndex = products.findIndex(product => product.id === productId);
+  if (productIndex === -1) {
     res.status(404).send('The product with the given ID was not found');
     return;
   }
-  const index = products.indexOf(product);
-  products.splice(index, 1);
-  res.json(product);
+  products.splice(productIndex, 1);
   res.status(200).send('Product deleted');
 });
+
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
